@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baggage Selection – Fly DreamAir</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      margin:0;
+      padding:24px;
+      background:#f7f7f7;
+      color:#222;
+      background-image: url('flydreamair.jpg');
+      background-size: cover;
+    }
+    .card{
+      max-width:640px;
+      margin:0 auto;
+      background:#fff;
+      border:1px solid #e5e5e5;
+      border-radius:12px;
+      padding:20px;
+    }
+    h2{
+      margin:0 0 14px;
+    }
+    .baggage-option{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px;
+      border:1px solid #ddd;
+      border-radius:10px;
+      margin-bottom:10px;
+      background:#fafafa;
+    }
+    .baggage-option span{
+      font-size:16px;
+    }
+    .price{
+      color:#ef9999;
+      font-weight:bold;
+    }
+    .actions{
+      margin-top:20px;
+      text-align:right;
+    }
+    .btn{
+      background:#ef9999;
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:10px 16px;
+      font-size:14px;
+      cursor:pointer;
+    }
+    .btn:hover{
+      background:#e67e7e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Select Baggage</h2>
+    <p style="color:#666; font-size:14px; margin-top:0;">Choose your baggage weight and the cost will be calculated.</p>
+
+    <!-- Baggage Options -->
+    <div class="baggage-option">
+      <span>10 kg</span>
+      <span class="price">$20</span>
+      <input type="number" id="weight10" value="0" min="0" step="1" style="width: 60px;" />
+    </div>
+
+    <div class="baggage-option">
+      <span>20 kg</span>
+      <span class="price">$30</span>
+      <input type="number" id="weight20" value="0" min="0" step="1" style="width: 60px;" />
+    </div>
+
+    <div class="baggage-option">
+      <span>30 kg</span>
+      <span class="price">$40</span>
+      <input type="number" id="weight30" value="0" min="0" step="1" style="width: 60px;" />
+    </div>
+
+    <div class="baggage-option">
+      <span>40 kg</span>
+      <span class="price">$50</span>
+      <input type="number" id="weight40" value="0" min="0" step="1" style="width: 60px;" />
+    </div>
+
+    <div class="baggage-option">
+      <span>50 kg</span>
+      <span class="price">$60</span>
+      <input type="number" id="weight50" value="0" min="0" step="1" style="width: 60px;" />
+    </div>
+
+    <!-- Total Price Display -->
+    <div style="margin-top:20px; font-size:16px; font-weight:bold;">
+      Total Baggage Cost: <span id="total-cost">$0</span>
+    </div>
+
+    <!-- Proceed Button -->
+    <div class="actions">
+      <button class="btn" type="button" id="proceed-btn" onclick="location.href='seatselection.html'">Proceed</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to calculate the total cost
+    function calculateTotalCost() {
+      const weight10 = document.getElementById('weight10').value;
+      const weight20 = document.getElementById('weight20').value;
+      const weight30 = document.getElementById('weight30').value;
+      const weight40 = document.getElementById('weight40').value;
+      const weight50 = document.getElementById('weight50').value;
+
+      const cost10 = weight10 * 20;
+      const cost20 = weight20 * 30;
+      const cost30 = weight30 * 40;
+      const cost40 = weight40 * 50;
+      const cost50 = weight50 * 60;
+
+      const totalCost = cost10 + cost20 + cost30 + cost40 + cost50;
+      document.getElementById('total-cost').textContent = `$${totalCost}`;
+    }
+
+    // Add event listeners to all weight inputs
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+      input.addEventListener('input', calculateTotalCost);
+    });
+  </script>
+
+</body>
+</html>

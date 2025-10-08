@@ -13,6 +13,9 @@
       color:#222;
       background-image: url('flydreamair.jpg');
       background-size: cover;
+      position: relative; /* Required for absolute positioning */
+      background-image: url('flydreamair.jpg');
+            background-size: cover;
     }
     .card{
       max-width:520px;
@@ -51,9 +54,30 @@
       background:#ef9999;color:#fff;font-size:18px;cursor:pointer
     }
     .primary:active{transform:scale(0.98)}
+    
+    /* New button style for "Manage Upcoming Flights" */
+    .manage-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      padding: 10px 16px;
+      background-color: #ef9999;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .manage-btn:hover {
+      background-color: #e88a8a;
+    }
   </style>
 </head>
 <body>
+  <button class="manage-btn" id="manageBtn">Manage Upcoming Flights</button>
+
   <div class="card">
     <h2>Register</h2>
 
@@ -123,7 +147,7 @@
       });
     });
 
-    // Redirect with query params on click
+    // Redirect with query params on click for "Search Flights"
     document.getElementById('searchBtn').addEventListener('click', ()=>{
       const from = document.getElementById('from').value.trim();
       const to   = document.getElementById('to').value.trim();
@@ -136,8 +160,12 @@
         infant: counts.infant
       });
 
-      // Goes to your Flight Selection page with the info
       location.href = `flightselection.html?${params.toString()}`;
+    });
+
+    // Redirect to manageflight.html when the button is clicked
+    document.getElementById('manageBtn').addEventListener('click', ()=>{
+      location.href = 'manageflight.html';
     });
   </script>
 </body>
