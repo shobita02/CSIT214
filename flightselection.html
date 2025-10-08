@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flight Selection – Fly DreamAir</title>
+  <style>
+    body{font-family: Arial, sans-serif;margin:0;padding:24px;background:#f7f7f7;color:#222}
+    .card{max-width:640px;margin:0 auto;background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:20px}
+    h2{margin:0 0 10px}
+    .sub{color:#555;margin:0 0 16px;font-size:14px}
+    .flight{border:1px solid #ddd;border-radius:10px;padding:14px 16px}
+    .row{display:flex;align-items:center;justify-content:space-between;font-size:18px}
+    .arrow{
+      flex:1;
+      text-align:center;
+      position:relative;
+      color:#ef9999;
+      font-size:28px;
+      font-weight:bold;
+      margin:0 20px;
+    }
+    .arrow::before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:5%;
+      right:5%;
+      height:2px;
+      background:#ccc;
+      transform:translateY(-50%);
+      z-index:-1;
+    }
+    .meta{margin-top:10px;font-size:14px;color:#444}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Available Flight</h2>
+    <p class="sub" id="criteria"></p>
+
+    <div class="flight">
+      <div class="row" id="flight-line">
+        <!-- e.g. 6:20am (SYD) → 8:00am (ADL) -->
+      </div>
+      <div class="meta" id="duration"></div>
+      <!-- Add this inside the .flight block, under the duration -->
+<div style="margin-top:14px; text-align:right;">
+  <button
+    type="button"
+    onclick="location.href='seatselection.html'"
+    style="background:#ef9999;color:#fff;border:none;border-radius:999px;padding:10px 16px;font-size:14px;cursor:pointer"
+  >
+    Select Flight
+  </button>
+</div>
+
+    </div>
+  </div>
+
+  <script>
+    // Read URL params
+    const p = new URLSearchParams(location.search);
+    const from = (p.get('from') || '').trim();
+    const to = (p.get('to') || '').trim();
+    const date = p.get('date') || '';
+    const adult = Number(p.get('adult') || 0);
+    const child = Number(p.get('child') || 0);
+    const infant = Number(p.get('infant') || 0);
+
+    // Show criteria info
+    const pax = [];
+    if (adult) pax.push(`${adult} Adult${adult>1?'s':''}`);
+    if (child) pax.push(`${child} Children`);
+    if (infant) pax.push(`${infant} Infants`);
+    document.getElementById('criteria').textContent =
+      `${from || 'From ?'} → ${to || 'To ?'}${date ? ' | ' + date : ''}${pax.length ? ' | ' + pax.join(', ') : ''}`;
+
+    // Example flight times
+    const depTimeStr = '6:20am';
+    const arrTimeStr = '8:00am';
+
+    // Build the visual line with pretty arrow
+    const flightLine = document.getElementById('flight-line');
+    const fromTag = from ? `(${from})` : '';
+    const toTag = to ? `(${to})` : '';
+    flightLine.innerHTML = `
+      <div>${depTimeStr} ${fromTag}</div>
+      <div class="arrow">→</div>
+      <div>${arrTimeStr} ${toTag}</div>
+    `;
+
+    // Compute total travel time
+    function parseTime12h(t){
+      const m = t.match(/^(\d{1,2}):(\d{2})(am|pm)$/i);
+      if(!m) return null;
+      let h = parseInt(m[1],10);
+      const min = parseInt(m[2],10);
+      const ampm = m[3].toLowerCase();
+      if (ampm === 'am') {
+        if (h === 12) h = 0;
+      } else { if (h !== 12) h += 12; }
+      return h*60 + min;
+    }
+
+    const depMin = parseTime12h(depTimeStr);
+    const arrMin = parseTime12h(arrTimeStr);
+    let diff = (arrMin !== null && depMin !== null) ? arrMin - depMin : null;
+    if (diff !== null && diff < 0) diff += 24*60;
+    const durH = diff !== null ? Math.floor(diff/60) : null;
+    const durM = diff !== null ? diff%60 : null;
+
+    document.getElementById('duration').textContent =
+      (durH !== null) ? `Total travel time: ${durH}h ${durM}m` : '';
+  </script>
+</body>
+</html>

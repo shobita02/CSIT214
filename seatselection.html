@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seat Selectionss – Fly DreamAir</title>
+  <style>
+    body{font-family: Arial, sans-serif;margin:0;padding:24px;background:#f7f7f7;color:#222}
+    .card{max-width:720px;margin:0 auto;background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:20px}
+    h2{margin:0 0 14px}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 60px repeat(6, 1fr);
+      gap:10px;
+      align-items:center;
+    }
+    .hdr, .rowlbl{
+      font-weight:bold;color:#666;text-align:center;
+    }
+    .rowlbl{ text-align:center }
+    .seat{
+      border:1px solid #ccc;
+      border-radius:8px;
+      background:#fafafa;
+      padding:12px 0;
+      text-align:center;
+      cursor:pointer;
+      user-select:none;
+      transition:transform .05s ease;
+    }
+    .seat:active{ transform:scale(0.98) }
+    .seat.selected{
+      background:#ffe3e6;         /* light pink */
+      border-color:#ef9999;
+      box-shadow:0 0 0 2px rgba(239,153,153,0.25) inset;
+      font-weight:bold;
+    }
+    .legend{margin-top:14px;color:#666;font-size:12px}
+
+    .proceed-btn {
+      display: none; /* Hidden by default */
+      margin-top: 20px;
+      text-align: center;
+    }
+    .proceed-btn button {
+      background:#ef9999;color:#fff;border:none;border-radius:999px;padding:10px 16px;font-size:14px;cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Select Your Seats</h2>
+
+    <!-- Column headers -->
+    <div class="grid">
+      <div></div>
+      <div class="hdr">1</div>
+      <div class="hdr">2</div>
+      <div class="hdr">3</div>
+      <div class="hdr">4</div>
+      <div class="hdr">5</div>
+      <div class="hdr">6</div>
+
+      <!-- Rows A–F with seats 1–6 -->
+      <!-- A -->
+      <div class="rowlbl">A</div>
+      <div class="seat" data-seat="A1">A1</div>
+      <div class="seat" data-seat="A2">A2</div>
+      <div class="seat" data-seat="A3">A3</div>
+      <div class="seat" data-seat="A4">A4</div>
+      <div class="seat" data-seat="A5">A5</div>
+      <div class="seat" data-seat="A6">A6</div>
+
+      <!-- B -->
+      <div class="rowlbl">B</div>
+      <div class="seat" data-seat="B1">B1</div>
+      <div class="seat" data-seat="B2">B2</div>
+      <div class="seat" data-seat="B3">B3</div>
+      <div class="seat" data-seat="B4">B4</div>
+      <div class="seat" data-seat="B5">B5</div>
+      <div class="seat" data-seat="B6">B6</div>
+
+      <!-- C -->
+      <div class="rowlbl">C</div>
+      <div class="seat" data-seat="C1">C1</div>
+      <div class="seat" data-seat="C2">C2</div>
+      <div class="seat" data-seat="C3">C3</div>
+      <div class="seat" data-seat="C4">C4</div>
+      <div class="seat" data-seat="C5">C5</div>
+      <div class="seat" data-seat="C6">C6</div>
+
+      <!-- D -->
+      <div class="rowlbl">D</div>
+      <div class="seat" data-seat="D1">D1</div>
+      <div class="seat" data-seat="D2">D2</div>
+      <div class="seat" data-seat="D3">D3</div>
+      <div class="seat" data-seat="D4">D4</div>
+      <div class="seat" data-seat="D5">D5</div>
+      <div class="seat" data-seat="D6">D6</div>
+
+      <!-- E -->
+      <div class="rowlbl">E</div>
+      <div class="seat" data-seat="E1">E1</div>
+      <div class="seat" data-seat="E2">E2</div>
+      <div class="seat" data-seat="E3">E3</div>
+      <div class="seat" data-seat="E4">E4</div>
+      <div class="seat" data-seat="E5">E5</div>
+      <div class="seat" data-seat="E6">E6</div>
+
+      <!-- F -->
+      <div class="rowlbl">F</div>
+      <div class="seat" data-seat="F1">F1</div>
+      <div class="seat" data-seat="F2">F2</div>
+      <div class="seat" data-seat="F3">F3</div>
+      <div class="seat" data-seat="F4">F4</div>
+      <div class="seat" data-seat="F5">F5</div>
+      <div class="seat" data-seat="F6">F6</div>
+    </div>
+
+    <p class="legend">Click seats to select/deselect.</p>
+
+    <!-- Proceed button (hidden initially) -->
+    <div class="proceed-btn">
+      <button onclick="location.href='inflightservice.html'">Proceed to Inflight Service</button>
+    </div>
+  </div>
+
+  <script>
+    // Track if any seat is selected
+    let selectedSeats = 0;
+    
+    // Add event listeners to seats
+    document.querySelectorAll('.seat').forEach(seat => {
+      seat.addEventListener('click', () => {
+        seat.classList.toggle('selected');
+        selectedSeats = document.querySelectorAll('.seat.selected').length;
+        
+        // Show "Proceed" button if at least one seat is selected
+        if (selectedSeats > 0) {
+          document.querySelector('.proceed-btn').style.display = 'block';
+        } else {
+          document.querySelector('.proceed-btn').style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
